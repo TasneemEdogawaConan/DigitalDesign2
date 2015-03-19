@@ -1,0 +1,18 @@
+array[size][size] //contains 1 if there is a link from i to j
+vector<string> gates//convert number to name // gate[0] = first_node_name
+map<string, int> m//convert name to number
+
+read( gate)
+read (input)
+read(output)
+array[map[input]][map[gate_name]]=1
+array[map[gate_name]][map[output]]=1
+
+fund read()
+{
+if(node is not in the map)
+{
+gates.push_back(node name);
+m[node name]=gates.size()
+}
+}
