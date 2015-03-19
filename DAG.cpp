@@ -20,4 +20,16 @@ void DAG::Read(string fileName)
 {
 	ifstream in;
 	in.open(fileName);
+	if (!in.open())
+	{
+		cout<<"ERROR! CANNOT OPEN SUCH A FILE!"<<endl;
+	}
+	else
+	{
+		while(!in.eof())
+		{
+			
+		}
+	}
+	in.close();
 }
