@@ -1,14 +1,15 @@
 #include<iostream>
 #include<fstream>
+#include<sstream>
 #include "DAG.h"
 
 using namespace std;
 
 DAG::DAG()
 {
-	for(int i=0; i<10000; i++)
+	for(int i=0; i<100; i++)
 	{
-		for(int j=0; j<10000; j++)
+		for(int j=0; j<100; j++)
 		{
 			adjMatrix[i][j]=0;
 		}
@@ -16,20 +17,24 @@ DAG::DAG()
 }
 DAG::~DAG()
 {}
-void DAG::Read(string fileName)
+void DAG::Read(string fileName) //sample.v
 {
 	ifstream in;
-	in.open(fileName);
-	if (!in.open())
+	in.open(fileName,std::fstream::in | std::fstream::out | std::fstream::app);
+	if (in.is_open())
 	{
-		cout<<"ERROR! CANNOT OPEN SUCH A FILE!"<<endl;
+		string s;
+		getline(in,s);
+		cout<<s<<endl;
+		while(!in.eof())
+		{
+			getline(in,s);
+			cout<<s<<endl;
+		}
 	}
 	else
 	{
-		while(!in.eof())
-		{
-			
-		}
+		cout<<"ERROR! CANNOT OPEN SUCH A FILE!"<<endl;
 	}
 	in.close();
 }
