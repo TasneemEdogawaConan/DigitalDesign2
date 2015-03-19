@@ -1,6 +1,6 @@
 #include<iostream>
 #include<fstream>
-#include<sstream>
+
 #include "DAG.h"
 
 using namespace std;
@@ -20,7 +20,7 @@ DAG::~DAG()
 void DAG::Read(string fileName) //sample.v
 {
 	ifstream in;
-	in.open(fileName,std::fstream::in | std::fstream::out | std::fstream::app);
+	in.open(fileName.c_str());
 	if (in.is_open())
 	{
 		string s;
