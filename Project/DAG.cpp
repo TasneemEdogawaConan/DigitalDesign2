@@ -66,8 +66,9 @@ void DAG::Read(string fileName) //sample.v
 					if(Mapping.count(s)==0)
 					{
 						gates.push_back(s);
-						Mapping[s]=gates.size();
+						Mapping[s]=gates.size()-1;
 					}
+					
 					////first_input
 					getline(in,s);
 					s.erase(0,7);//remove .A(
@@ -76,9 +77,10 @@ void DAG::Read(string fileName) //sample.v
 						if(Mapping.count(s)==0) //if the node does not exist in the map, it is added
 						{
 							gates.push_back(s);
-							Mapping[s]=gates.size();
+							Mapping[s]=gates.size()-1;
 						}
 						adjMatrix[Mapping[s]][Mapping[gateName]]=1;
+						//cout<<"A connect from node: "<<gates[Mapping[s]]<<" to Node: "<<gates[Mapping[gateName]]<<endl;
 					cout<<"input1 "<<s<<endl;
 					////output
 					getline(in,s);
@@ -88,9 +90,10 @@ void DAG::Read(string fileName) //sample.v
 						if(Mapping.count(s)==0)
 						{
 							gates.push_back(s);
-							Mapping[s]=gates.size();
+							Mapping[s]=gates.size()-1;
 						}
 						adjMatrix[Mapping[gateName]][Mapping[s]]=1;
+						//cout<<"A connect from node: "<<gates[Mapping[gateName]]<<" to Node: "<<gates[Mapping[s]]<<endl;
 					cout<<"output "<<s<<endl;
 					getline(in,s);
 				}
@@ -102,12 +105,12 @@ void DAG::Read(string fileName) //sample.v
 					s.erase(s.length()-1,1);//remove semicolon
 					s=removeSpaces(s); //remove space within the name
 					s=word+s;
-					cout<<"gate: "<<gate++<<": "<<s<<endl;
+					gateName=s;
 					///////////////
 					if(Mapping.count(s)==0)
 					{
 						gates.push_back(s);
-						Mapping[s]=gates.size();
+						Mapping[s]=gates.size()-1;
 					}
 					////first_input
 					getline(in,s);
@@ -117,9 +120,10 @@ void DAG::Read(string fileName) //sample.v
 						if(Mapping.count(s)==0) //if the node does not exist in the map, it is added
 						{
 							gates.push_back(s);
-							Mapping[s]=gates.size();
+							Mapping[s]=gates.size()-1;
 						}
 						adjMatrix[Mapping[s]][Mapping[gateName]]=1;
+						//cout<<"A connect from node: "<<gates[Mapping[s]]<<" to Node: "<<gates[Mapping[gateName]]<<endl;
 					cout<<"input1 "<<s<<endl;
 					////second_input
 					getline(in,s);
@@ -129,9 +133,10 @@ void DAG::Read(string fileName) //sample.v
 						if(Mapping.count(s)==0) //if the node does not exist in the map, it is added
 						{
 							gates.push_back(s);
-							Mapping[s]=gates.size();
+							Mapping[s]=gates.size()-1;
 						}
 						adjMatrix[Mapping[s]][Mapping[gateName]]=1;
+						//cout<<"A connect from node: "<<gates[Mapping[s]]<<" to Node: "<<gates[Mapping[gateName]]<<endl;
 					cout<<"input2 "<<s<<endl;
 					////output
 					getline(in,s);
@@ -141,9 +146,10 @@ void DAG::Read(string fileName) //sample.v
 						if(Mapping.count(s)==0)
 						{
 							gates.push_back(s);
-							Mapping[s]=gates.size();
+							Mapping[s]=gates.size()-1;
 						}
 						adjMatrix[Mapping[gateName]][Mapping[s]]=1;
+						//cout<<"A connect from node: "<<gates[Mapping[gateName]]<<" to Node: "<<gates[Mapping[s]]<<endl;
 					cout<<"output "<<s<<endl;
 					getline(in,s);					
 				}
@@ -203,5 +209,9 @@ void DAG::PrintADJ(int n)
 	cout<<"Adjecency Matrix"<<endl;
 	for(int i=0; i<n;i++)
 		for(int j=0; j<n;j++)
-			cout<<"adjMatrix[i][j]"<<adjMatrix[i][j]<<endl;
+			if(adjMatrix[i][j]==1)
+				{
+					cout<<"A connect from node: "<<gates[i]<<" to Node: "<<gates[j]<<endl;
+					//cout<<"adjMatrix[i][j]"<<adjMatrix[i][j]<<endl;
+				}
 }
