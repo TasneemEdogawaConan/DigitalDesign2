@@ -1,3 +1,4 @@
+input gate134;
 TestFile
 NetListToDAG
 Parsing->DAG->TopologicalSorting
