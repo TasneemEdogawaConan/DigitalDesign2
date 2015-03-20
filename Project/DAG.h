@@ -9,19 +9,21 @@ using namespace std;
 class DAG
 {
 public:
-	DAG();
+	DAG(int n);
 	~DAG();
 	void Read(string fileName);//sample.v
 	string removeSpaces(string s);//remove spaces within string
 	bool IsInput(string s);
 	bool IsOutput(string s);
-	//void Print();
+	void PrintV(int n);
+	void PrintM(int n);
+	void PrintADJ(int n);
 private:
 	map<string, int> Mapping; // mapping each gate to a number
 	vector <string> gates; // names of gates
-	int adjMatrix [100][100]; //adjacency matrix if the value is 1, then node i and j are connected
+	int** adjMatrix; //adjacency matrix if the value is 1, then node i and j are connected
 	vector<string> inputs;
-	vector<string>outputs;
+	vector<string> outputs;
 	};
 
 #endif

@@ -6,15 +6,16 @@
 
 using namespace std;
 
-DAG::DAG()
+DAG::DAG(int n)
 {
-	for(int i=0; i<100; i++)
+	adjMatrix= new int*[n];
+	for(int i=0; i<n; i++)
 	{
-		for(int j=0; j<100; j++)
-		{
-			adjMatrix[i][j]=0;
-		}
+		adjMatrix[i]= new int [n];
 	}
+	for(int i=0; i<n;i++)
+		for(int j=0;j<n;j++)
+			adjMatrix[i][j]=0;
 }
 DAG::~DAG()
 {}
@@ -26,13 +27,8 @@ void DAG::Read(string fileName) //sample.v
 	in.open(fileName.c_str());
 	int inp=0;
 	int out=0;
-	int INV=0;
-	int OR=0;
-	int XOR=0;
-	int NOR=0;
-	int XNOR=0;
-	int AND=0;
-	int NAND=0;
+	int gate=0;
+	string gateName="";
 	if (in.is_open())
 	{
 		while(!in.eof())
@@ -54,54 +50,104 @@ void DAG::Read(string fileName) //sample.v
 				cout<<"output "<<out++<<" is "<<s<<endl;
 				outputs.push_back(s);
 			}
-			else if(s=="INVX1")//invertor
+			else
 			{
-				getline(in,s);
-				s.erase(s.length()-1,1);//remove semicolon
-				s=removeSpaces(s); //remove space within the name
-				cout<<"invertor "<<INV++<<" is "<<s<<endl;
-			}
-			else if(s=="NOR2X1")//nor
-			{
-				getline(in,s);
-				s.erase(s.length()-1,1);//remove semicolon
-				s=removeSpaces(s); //remove space within the name
-				cout<<"nor "<<NOR++<<" is "<<s<<endl;
-			}
-			else if(s=="XNOR2X1")//xnor
-			{
-				getline(in,s);
-				s.erase(s.length()-1,1);//remove semicolon
-				s=removeSpaces(s); //remove space within the name
-				cout<<"xnor "<<XNOR++<<" is "<<s<<endl;
-			}
-			else if(s=="OR2X2")//or
-			{
-				getline(in,s);
-				s.erase(s.length()-1,1);//remove semicolon
-				s=removeSpaces(s); //remove space within the name
-				cout<<"or "<<OR++<<" is "<<s<<endl;
-			}
-			else if(s=="XOR2X1")//xor
-			{
-				getline(in,s);
-				s.erase(s.length()-1,1);//remove semicolon
-				s=removeSpaces(s); //remove space within the name
-				cout<<"xor "<<XOR++<<" is "<<s<<endl;
-			}
-			else if(s=="AND2X2")//and
-			{
-				getline(in,s);
-				s.erase(s.length()-1,1);//remove semicolon
-				s=removeSpaces(s); //remove space within the name
-				cout<<"and "<<AND++<<" is "<<s<<endl;
-			}
-			else if(s=="NAND2X1")//nand
-			{
-				getline(in,s);
-				s.erase(s.length()-1,1);//remove semicolon
-				s=removeSpaces(s); //remove space within the name
-				cout<<"nand "<<NAND++<<" is "<<s<<endl;
+				
+				if(s=="INVX1")
+				{
+					///////////////
+					word=s;
+					getline(in,s);
+					s.erase(s.length()-1,1);//remove semicolon
+					s=removeSpaces(s); //remove space within the name
+					s=word+s;
+					gateName=s;
+					///////////////
+					if(Mapping.count(s)==0)
+					{
+						gates.push_back(s);
+						Mapping[s]=gates.size();
+					}
+					////first_input
+					getline(in,s);
+					s.erase(0,7);//remove .A(
+					s.erase(s.length()-2,2);//remove ),
+					s=removeSpaces(s);
+						if(Mapping.count(s)==0) //if the node does not exist in the map, it is added
+						{
+							gates.push_back(s);
+							Mapping[s]=gates.size();
+						}
+						adjMatrix[Mapping[s]][Mapping[gateName]]=1;
+					cout<<"input1 "<<s<<endl;
+					////output
+					getline(in,s);
+					s.erase(0,7);//remove .A(
+					s.erase(s.length()-1,1);//remove ),
+					s=removeSpaces(s);
+						if(Mapping.count(s)==0)
+						{
+							gates.push_back(s);
+							Mapping[s]=gates.size();
+						}
+						adjMatrix[Mapping[gateName]][Mapping[s]]=1;
+					cout<<"output "<<s<<endl;
+					getline(in,s);
+				}
+				else if( s=="NOR2X1" ||s=="XNOR2X1"||s=="OR2X2"||s=="XOR2X1"||s=="AND2X2"||s=="NAND2X1")
+				{
+					///////////////
+					word=s;
+					getline(in,s);
+					s.erase(s.length()-1,1);//remove semicolon
+					s=removeSpaces(s); //remove space within the name
+					s=word+s;
+					cout<<"gate: "<<gate++<<": "<<s<<endl;
+					///////////////
+					if(Mapping.count(s)==0)
+					{
+						gates.push_back(s);
+						Mapping[s]=gates.size();
+					}
+					////first_input
+					getline(in,s);
+					s.erase(0,7);//remove .A(
+					s.erase(s.length()-2,2);//remove ),
+					s=removeSpaces(s);
+						if(Mapping.count(s)==0) //if the node does not exist in the map, it is added
+						{
+							gates.push_back(s);
+							Mapping[s]=gates.size();
+						}
+						adjMatrix[Mapping[s]][Mapping[gateName]]=1;
+					cout<<"input1 "<<s<<endl;
+					////second_input
+					getline(in,s);
+					s.erase(0,7);//remove .A(
+					s.erase(s.length()-2,2);//remove ),
+					s=removeSpaces(s);
+						if(Mapping.count(s)==0) //if the node does not exist in the map, it is added
+						{
+							gates.push_back(s);
+							Mapping[s]=gates.size();
+						}
+						adjMatrix[Mapping[s]][Mapping[gateName]]=1;
+					cout<<"input2 "<<s<<endl;
+					////output
+					getline(in,s);
+					s.erase(0,7);//remove .A(
+					s.erase(s.length()-1,1);//remove )
+					s=removeSpaces(s);
+						if(Mapping.count(s)==0)
+						{
+							gates.push_back(s);
+							Mapping[s]=gates.size();
+						}
+						adjMatrix[Mapping[gateName]][Mapping[s]]=1;
+					cout<<"output "<<s<<endl;
+					getline(in,s);					
+				}
+				
 			}
 			}
 	}
@@ -134,4 +180,28 @@ bool DAG::IsOutput(string s)
 		if(s==outputs[i])
 			return true;
 	return false;
+}
+
+void DAG::PrintV(int n)
+{
+	//Representing nums with gates
+	cout<<"Representing nums with gates, Vector"<<endl;
+	for(int i=0; i<gates.size();i++)
+		cout<<i<<" "<<gates[i]<<endl;
+}
+
+void DAG::PrintM(int n)
+{
+	int i=0;
+	cout<<"Mapping gates to num, Map"<<endl;
+	for (map<string,int>:: const_iterator it= Mapping.begin(); it!=Mapping.end(); ++it)
+		cout << i++<<" "<<it->first << " => " << it->second << '\n';
+}
+
+void DAG::PrintADJ(int n)
+{
+	cout<<"Adjecency Matrix"<<endl;
+	for(int i=0; i<n;i++)
+		for(int j=0; j<n;j++)
+			cout<<"adjMatrix[i][j]"<<adjMatrix[i][j]<<endl;
 }
