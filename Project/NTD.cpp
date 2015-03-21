@@ -85,11 +85,11 @@ int main()
 		D2Array[i]= new int [k];
 	}
 	//////
-	D2Array[0][0]=0; D2Array[0][1]=1; D2Array[0][2]=0; D2Array[0][3]=0; D2Array[0][4]=0;
-	D2Array[1][0]=0; D2Array[1][1]=0; D2Array[1][2]=0; D2Array[1][3]=1; D2Array[1][4]=0;
-	D2Array[2][0]=0; D2Array[2][1]=1; D2Array[2][2]=0; D2Array[2][3]=1; D2Array[2][4]=1;
-	D2Array[3][0]=0; D2Array[3][1]=0; D2Array[3][2]=0; D2Array[3][3]=0; D2Array[3][4]=0;
-	D2Array[4][0]=0; D2Array[4][1]=0; D2Array[4][2]=0; D2Array[4][3]=1; D2Array[4][4]=0;
+	D2Array[0][0]=0; D2Array[0][1]=1; D2Array[0][2]=1; D2Array[0][3]=1; D2Array[0][4]=0;
+	D2Array[1][0]=0; D2Array[1][1]=0; D2Array[1][2]=1; D2Array[1][3]=1; D2Array[1][4]=1;
+	D2Array[2][0]=0; D2Array[2][1]=0; D2Array[2][2]=0; D2Array[2][3]=1; D2Array[2][4]=0;
+	D2Array[3][0]=0; D2Array[3][1]=0; D2Array[3][2]=0; D2Array[3][3]=0; D2Array[3][4]=1;
+	D2Array[4][0]=0; D2Array[4][1]=0; D2Array[4][2]=0; D2Array[4][3]=0; D2Array[4][4]=0;
 	//////
 	vector<string>nodes;
 	nodes.push_back("A");

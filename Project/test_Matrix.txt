@@ -1,7 +1,15 @@
 Test_Matrix_for_converting_Adjacency_Matrix_of_DAG_to_sorted_list
+EX1
  ABCDE
 A01000
 B00010
 C01011
 D00000
 E00010
+EX2
+ ABCDE
+A01110
+B00111
+C00010
+D00001
+E00000
