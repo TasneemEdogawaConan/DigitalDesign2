@@ -215,8 +215,39 @@ void DAG::PrintADJ(int n)
 					//cout<<"adjMatrix[i][j]"<<adjMatrix[i][j]<<endl;
 				}
 }
-/*vector<string> DAG::sort(int** Two_D_Array,vector<string> nodes)
+
+
+vector<string> DAG::sort(int n)
 {
-
-}*/
-
+	int count;
+	vector<string> sorted;
+	vector<bool> check;
+	for(int i=0; i<gates.size();i++)
+	{
+		check.push_back(false);
+	}
+	for(int z=0; z<n;z++)
+			{
+		for(int i=0; i<n;i++)
+			{
+				count=0;
+				for(int j=0;j<n;j++)
+				{
+					if(adjMatrix[j][i]==0)
+						count++;
+				}
+				if (count==n && !check[i])
+				{
+					sorted.push_back(gates[i]);
+					check[i]=true;
+					for(int t=0; t<n;t++)
+						adjMatrix[i][t]=0;				
+				}
+				}
+	}
+	/*for(int i=0; i<sorted.size();i++)
+		{
+			cout<<sorted[i]<<"   ";
+		}*/
+	return sorted;
+	}
