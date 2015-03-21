@@ -18,6 +18,7 @@ public:
 	void PrintV(int n);
 	void PrintM(int n);
 	void PrintADJ(int n);
+	//vector<string> sort(int** Two_D_Array,vector<string> nodes);
 private:
 	map<string, int> Mapping; // mapping each gate to a number
 	vector <string> gates; // names of gates
