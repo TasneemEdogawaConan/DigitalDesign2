@@ -1,4 +1,8 @@
 References: "TopologicalSort_From_Adjacency_Matrix"
 http://www.stoimen.com/blog/2012/12/10/computer-algorithms-topological-sort-revisited/  
+https://ece.uwaterloo.ca/~cmoreno/ece250/2012-03-16--topological-sort.pdf
+http://faculty.simpson.edu/lydia.sinapova/www/cmsc250/LN250_Weiss/L27-GraphSummary.htm
+http://www.seas.gwu.edu/~simhaweb/alg/lectures/module7/module7.html
+
 
  
