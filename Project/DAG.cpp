@@ -152,8 +152,18 @@ void DAG::Read(string fileName) //sample.v
 	///connecting root node with all inputs
 	gates.push_back("root");
 	Mapping["root"]=gates.size()-1;
-	for(int i=0; i<inputs.size();i++)
-		adjMatrix[Mapping["root"]][Mapping[inputs[i]]]=1;
+	/*for(int i=0; i<inputs.size();i++)
+		{
+			if(Mapping.count(inputs[i])>0)
+				adjMatrix[Mapping["root"]][Mapping[inputs[i]]]=1;
+		}*/
+	for(int i=0; i<gates.size();i++)
+		{
+			if(IsInput(gates[i]))
+				{
+					adjMatrix[Mapping["root"]][i]=1;
+			}
+		}
 	
 	
 	in.close();
@@ -257,6 +267,13 @@ void DAG::BFS(int n)
 		}
 
 	}
+	//lev++;
+	/*for(int m=0; m<outputs.size();m++)
+	{
+		node.gate=outputs[m];
+		node.level=lev;
+		out.push(node);
+	}*/
 	for(int i=0; i<out.size();i++)
 		{
 			z=out.front();
@@ -267,8 +284,9 @@ void DAG::BFS(int n)
 	//outputs
 	for(int m=0; m<outputs.size();m++)
 	{
-		node.gate=outputs[m];
+		if(Mapping.count(outputs[m])>0)
+		{node.gate=outputs[m];
 		node.level=lev;
-		cout<<"GATE: "<< node.gate<<" in level "<<node.level<<endl;
+		cout<<"GATE: "<< node.gate<<" in level "<<node.level<<endl;}
 	}
 }
