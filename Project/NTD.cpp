@@ -8,19 +8,14 @@ using namespace std;
 int main()
 {
 	//Project1 Degital Design2 **Logic Circuit Schematic Beautifier
-	int n= 741;// got this num from testing by knowing the number of nodes
+	int n= 742;// got this num from testing by knowing the number of nodes
 	DAG d(n);
 	d.Read("sample.v");
-	d.PrintV(n);
+	//d.PrintV(n);
 	//d.PrintM(n);
 	//d.PrintADJ(n);
-	vector <string> sorted; 
-	sorted=d.sort(n);
-	for(int i=0; i<sorted.size();i++)
-		{
-			cout<<sorted[i]<<"   ";
-		}
-	
+	queue<DAG::LEVEL> k;
+	k=d.BFS(n);
 	system("PAUSE");
 	return 0;
 }

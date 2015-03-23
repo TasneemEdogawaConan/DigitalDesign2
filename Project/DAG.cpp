@@ -161,6 +161,13 @@ void DAG::Read(string fileName) //sample.v
 	{
 		cout<<"ERROR! CANNOT OPEN SUCH A FILE!"<<endl;
 	}
+	///connecting root node with all inputs
+	gates.push_back("root");
+	Mapping["root"]=gates.size()-1;
+	for(int i=0; i<inputs.size();i++)
+		adjMatrix[Mapping["root"]][Mapping[inputs[i]]]=1;
+	
+	
 	in.close();
 }
 string DAG:: removeSpaces(string s)
@@ -201,7 +208,9 @@ void DAG::PrintM(int n)
 	int i=0;
 	cout<<"Mapping gates to num, Map"<<endl;
 	for (map<string,int>:: const_iterator it= Mapping.begin(); it!=Mapping.end(); ++it)
-		cout << i++<<" "<<it->first << " => " << it->second << '\n';
+		{
+			cout << i++<<" "<<it->first << " => " << it->second << '\n';
+				}
 }
 
 void DAG::PrintADJ(int n)
@@ -217,37 +226,70 @@ void DAG::PrintADJ(int n)
 }
 
 
-vector<string> DAG::sort(int n)
+queue<DAG::LEVEL> DAG::BFS(int n)
 {
 	int count;
-	vector<string> sorted;
+	int lev=-1;
+	queue<LEVEL> order;
+	queue<LEVEL> out;
 	vector<bool> check;
+	LEVEL node, v,z;
+	bool flag=true;
 	for(int i=0; i<gates.size();i++)
 	{
 		check.push_back(false);
 	}
-	for(int z=0; z<n;z++)
-			{
-		for(int i=0; i<n;i++)
-			{
-				count=0;
-				for(int j=0;j<n;j++)
-				{
-					if(adjMatrix[j][i]==0)
-						count++;
-				}
-				if (count==n && !check[i])
-				{
-					sorted.push_back(gates[i]);
-					check[i]=true;
-					for(int t=0; t<n;t++)
-						adjMatrix[i][t]=0;				
-				}
-				}
-	}
-	/*for(int i=0; i<sorted.size();i++)
+	node.gate=gates[gates.size()-1];
+	node.level=lev++;
+	order.push(node);
+	check[gates.size()-1]=true;
+	int i;
+	while(!order.empty())
+	{
+		v=order.front();
+		i=Mapping[v.gate];
+		order.pop();
+		out.push(v);
+		lev++;
+		if(!flag)
+			lev--;
+		flag=false;
+		for(int j=0;j<gates.size(); j++)
 		{
-			cout<<sorted[i]<<"   ";
-		}*/
-	return sorted;
+			if(adjMatrix[i][j]==1)
+			{
+				if(!check[j])
+				{
+					node.gate=gates[j];
+					node.level=lev;
+					order.push(node);
+					check[j]=true;
+					flag=true;
+				}
+			}
+		}
+
 	}
+	//lev++;
+	/*for(int m=0; m<outputs.size();m++)
+	{
+		node.gate=outputs[m];
+		node.level=lev;
+		out.push(node);
+	}*/
+	for(int i=0; i<out.size();i++)
+		{
+			z=out.front();
+			out.pop();
+			cout<<"GATE: "<< z.gate<<" in level "<<z.level<<endl;
+		}
+	lev=z.level+1;
+	//outputs
+	for(int m=0; m<outputs.size();m++)
+	{
+		node.gate=outputs[m];
+		node.level=lev;
+		cout<<"GATE: "<< node.gate<<" in level "<<node.level<<endl;
+	}
+		return order;
+}

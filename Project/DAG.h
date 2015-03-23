@@ -1,6 +1,7 @@
 #include<iostream>
 #include<map>
 #include<vector>
+#include <queue> 
 
 using namespace std;
 
@@ -9,6 +10,11 @@ using namespace std;
 class DAG
 {
 public:
+	struct LEVEL
+	{
+		string gate;
+		int level;
+	};
 	DAG(int n);
 	~DAG();
 	void Read(string fileName);//sample.v
@@ -18,7 +24,8 @@ public:
 	void PrintV(int n);
 	void PrintM(int n);
 	void PrintADJ(int n);
-	vector<string> sort(int n);
+	queue<LEVEL> BFS(int n);
+	
 private:
 	map<string, int> Mapping; // mapping each gate to a number
 	vector <string> gates; // names of gates
