@@ -24,7 +24,7 @@ public:
 	void PrintV(int n);
 	void PrintM(int n);
 	void PrintADJ(int n);
-	queue<LEVEL> BFS(int n);
+	void BFS(int n);
 	
 private:
 	map<string, int> Mapping; // mapping each gate to a number

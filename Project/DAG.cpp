@@ -39,7 +39,6 @@ void DAG::Read(string fileName) //sample.v
 					getline(in,s);
 					s.erase(s.length()-1,1);//remove semicolon
 					s=removeSpaces(s); //remove space within the name
-					cout<<"input "<<inp++<<" is "<<s<<endl;
 					inputs.push_back(s);
 			}
 			else if (s=="output")
@@ -47,7 +46,6 @@ void DAG::Read(string fileName) //sample.v
 				getline(in,s);
 				s.erase(s.length()-1,1);//remove semicolon
 				s=removeSpaces(s); //remove space within the name
-				cout<<"output "<<out++<<" is "<<s<<endl;
 				outputs.push_back(s);
 			}
 			else
@@ -80,8 +78,6 @@ void DAG::Read(string fileName) //sample.v
 							Mapping[s]=gates.size()-1;
 						}
 						adjMatrix[Mapping[s]][Mapping[gateName]]=1;
-						//cout<<"A connect from node: "<<gates[Mapping[s]]<<" to Node: "<<gates[Mapping[gateName]]<<endl;
-					cout<<"input1 "<<s<<endl;
 					////output
 					getline(in,s);
 					s.erase(0,7);//remove .A(
@@ -93,8 +89,6 @@ void DAG::Read(string fileName) //sample.v
 							Mapping[s]=gates.size()-1;
 						}
 						adjMatrix[Mapping[gateName]][Mapping[s]]=1;
-						//cout<<"A connect from node: "<<gates[Mapping[gateName]]<<" to Node: "<<gates[Mapping[s]]<<endl;
-					cout<<"output "<<s<<endl;
 					getline(in,s);
 				}
 				else if( s=="NOR2X1" ||s=="XNOR2X1"||s=="OR2X2"||s=="XOR2X1"||s=="AND2X2"||s=="NAND2X1")
@@ -123,8 +117,6 @@ void DAG::Read(string fileName) //sample.v
 							Mapping[s]=gates.size()-1;
 						}
 						adjMatrix[Mapping[s]][Mapping[gateName]]=1;
-						//cout<<"A connect from node: "<<gates[Mapping[s]]<<" to Node: "<<gates[Mapping[gateName]]<<endl;
-					cout<<"input1 "<<s<<endl;
 					////second_input
 					getline(in,s);
 					s.erase(0,7);//remove .A(
@@ -136,8 +128,6 @@ void DAG::Read(string fileName) //sample.v
 							Mapping[s]=gates.size()-1;
 						}
 						adjMatrix[Mapping[s]][Mapping[gateName]]=1;
-						//cout<<"A connect from node: "<<gates[Mapping[s]]<<" to Node: "<<gates[Mapping[gateName]]<<endl;
-					cout<<"input2 "<<s<<endl;
 					////output
 					getline(in,s);
 					s.erase(0,7);//remove .A(
@@ -149,8 +139,6 @@ void DAG::Read(string fileName) //sample.v
 							Mapping[s]=gates.size()-1;
 						}
 						adjMatrix[Mapping[gateName]][Mapping[s]]=1;
-						//cout<<"A connect from node: "<<gates[Mapping[gateName]]<<" to Node: "<<gates[Mapping[s]]<<endl;
-					cout<<"output "<<s<<endl;
 					getline(in,s);					
 				}
 				
@@ -221,12 +209,11 @@ void DAG::PrintADJ(int n)
 			if(adjMatrix[i][j]==1)
 				{
 					cout<<"A connect from node: "<<gates[i]<<" to Node: "<<gates[j]<<endl;
-					//cout<<"adjMatrix[i][j]"<<adjMatrix[i][j]<<endl;
 				}
 }
 
 
-queue<DAG::LEVEL> DAG::BFS(int n)
+void DAG::BFS(int n)
 {
 	int count;
 	int lev=-1;
@@ -270,13 +257,6 @@ queue<DAG::LEVEL> DAG::BFS(int n)
 		}
 
 	}
-	//lev++;
-	/*for(int m=0; m<outputs.size();m++)
-	{
-		node.gate=outputs[m];
-		node.level=lev;
-		out.push(node);
-	}*/
 	for(int i=0; i<out.size();i++)
 		{
 			z=out.front();
@@ -291,5 +271,4 @@ queue<DAG::LEVEL> DAG::BFS(int n)
 		node.level=lev;
 		cout<<"GATE: "<< node.gate<<" in level "<<node.level<<endl;
 	}
-		return order;
 }

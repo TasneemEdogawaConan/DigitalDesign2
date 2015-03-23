@@ -15,7 +15,7 @@ int main()
 	//d.PrintM(n);
 	//d.PrintADJ(n);
 	queue<DAG::LEVEL> k;
-	k=d.BFS(n);
+	d.BFS(n);
 	system("PAUSE");
 	return 0;
 }
